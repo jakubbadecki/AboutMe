@@ -30,7 +30,8 @@ jobs:
         run: |
           npm install
           npm run build
-          echo "::set-env name=TAG_VERSION::$(node -p "require('./package.json').version")"
+          export VERSION=$(node -p "require('./package.json').version")
+          echo "::set-env name=TAG_VERSION::$VERSION"
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
