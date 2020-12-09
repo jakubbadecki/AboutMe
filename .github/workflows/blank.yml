@@ -7,13 +7,15 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  # This workflow contains two jobs called "build" and "release"
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -38,6 +40,7 @@ jobs:
           name: about-me
           path: dist
       - name: Create Release
+        if: github.ref == 'refs/heads/master'
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -48,6 +51,7 @@ jobs:
           draft: false
           prerelease: false
       - name: Upload Release Asset
+        if: github.ref == 'refs/heads/master'
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
