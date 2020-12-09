@@ -30,6 +30,7 @@ jobs:
         run: |
           npm install
           npm run build
+          echo "::set-env name=TAG_VERSION::$(node -p "require('./package.json').version")"
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -40,7 +41,6 @@ jobs:
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
-        run: echo "::set-env name=TAG_VERSION::$(node -p "require('./package.json').version")"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
