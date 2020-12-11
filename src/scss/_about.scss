@@ -1,0 +1,10 @@
+#about {
+    a.link {
+        color: $secondary;
+        &:active,
+        &:focus,
+        &:hover {
+            color: $light-brown;
+        }
+    }
+}
